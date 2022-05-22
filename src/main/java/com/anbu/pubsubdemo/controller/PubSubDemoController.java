@@ -1,10 +1,5 @@
 package com.anbu.pubsubdemo.controller;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -30,7 +25,7 @@ public class PubSubDemoController {
 			@Qualifier("inputChannel") MessageChannel inputChannel,
 			PubSubTemplate template
 			) {
-		PubSubInboundChannelAdapter adapter = new PubSubInboundChannelAdapter(template, "punSubDemoSubscription");
+		PubSubInboundChannelAdapter adapter = new PubSubInboundChannelAdapter(template, "pubSubDemoTopic-sub");
 		adapter.setOutputChannel(inputChannel);
 		return adapter;
 	}
@@ -44,43 +39,5 @@ public class PubSubDemoController {
 	public void receiveMessage(String paylod) {
 		this.message = paylod;
 	}
-	
-	public boolean solution(int[] A, int[] B, int P) {
-		boolean result = true;
-		Set<Integer> points = new HashSet<Integer>();
-		List<String> uniqueValues = new ArrayList<String>();
-		for(int i=0;i<A.length;i++) {
-			if(uniqueValues.indexOf(A[0]+","+B[0]) == -1 && uniqueValues.indexOf(B[0]+","+A[0])==-1) {
-				uniqueValues.add(A[0]+","+B[0]);
-			}
-		}
-		for(String uniqueValue: uniqueValues) {
-			String[] pointString = uniqueValue.split(",");
-			points.add(Integer.parseInt(pointString[0]));
-			points.add(Integer.parseInt(pointString[1]));
-		}
-		int checkNum=0;
-		for(Integer num: points) {
-			if(checkNum == 0) {
-				checkNum = num;
-			}
-			else {
-				if(checkNum == num+1) {
-					//Do Nothing
-				}else {
-					result = false;
-				}
-			}
-		}
-		String s = "abcd";
-		StringBuffer sb = new StringBuffer();
-		if(s.length()>0) {
-			int length = 3;
-			String appendString = s.substring(0,length);
-			sb.append(appendString);
-			sb.append("-");
-		}
-		
-		return result;
-	}
+
 }
